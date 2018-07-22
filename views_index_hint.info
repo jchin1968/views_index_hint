@@ -1,6 +1,0 @@
-name = Views Index Hint
-description = Provides option to add index hint to views.
-package = Views
-core = 7.x
-dependencies[] = views
-files[] = views_index_hint.class.inc

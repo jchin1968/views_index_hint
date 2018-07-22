@@ -1,15 +1,20 @@
 <?php
 
+namespace Drupal\views_index_hint;
+
 /**
  * @file
  *
  * Contains ViewsIndexHint.
  */
 
+use Drupal\Core\Database\Query\SelectExtender;
+use Drupal\Component\Utility\Html;
+
 /**
  * The extender class for Select queries to add index hint.
  */
-class ViewsIndexHint extends SelectQueryExtender {
+class ViewsIndexHint extends SelectExtender {
 
   /**
    * Constant for USE INDEX.
@@ -79,10 +84,10 @@ class ViewsIndexHint extends SelectQueryExtender {
       // There is no option to add the index hint except overriding
       // Execute as Drupal 7 uses SelectQuery object
       // (unlike Drupal 6 static query).
-      $search = '{'. $this->base_table .'} '. $this->base_table;
+      $search = PHP_EOL . '{'. $this->base_table .'} '. $this->base_table;
       $index_string = '';
       foreach ($this->index_hint as $type => $hint) {
-        $index_string .= $type . ' INDEX(' . check_plain($hint) . ') ';
+        $index_string .= $type . ' INDEX(' . Html::escape($hint) . ') ';
       }
 
       $replace = $search . ' ' . trim($index_string);
