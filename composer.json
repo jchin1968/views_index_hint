@@ -5,6 +5,6 @@
   "homepage": "https://drupal.org/project/views_index_hint",
   "require": {
     "drupal/core": "^8 || ^9 || ^10"
-  },
+  }
 }
 
