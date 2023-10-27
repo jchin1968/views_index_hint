@@ -1,6 +1,6 @@
 {
-  "name": "drupal/views_index_hint",
-  "description": "Provides option to add index hint to views.",
+  "name": "jchin1968/views_index_hint",
+  "description": "Fork of drupal/views_index_hint. Provides option to add index hint to views.",
   "type": "drupal-module",
   "homepage": "https://drupal.org/project/views_index_hint",
   "require": {
