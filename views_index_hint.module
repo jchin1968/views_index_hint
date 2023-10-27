@@ -18,7 +18,12 @@ function views_index_hint_views_pre_execute(ViewExecutable $view) {
     // Add the new extender to add index hint.
     /** @var ViewsIndexHint $extender */
     $extender = $view->query->query()->extend('Drupal\views_index_hint\ViewsIndexHint');
-    $extender->setBaseTable($view->storage->get('base_table'));
+
+    if ($table = $view->storage->getThirdPartySetting('views_index_hint', 'index_hint_table')) {
+      $extender->setBaseTable($table);
+    } else {
+      $extender->setBaseTable($view->storage->get('base_table'));
+    }
 
     if ($index = $view->storage->getThirdPartySetting('views_index_hint', 'index_hint_use')) {
       $extender->setIndexHint($index, ViewsIndexHint::INDEX_HINT_TYPE_USE);
@@ -76,6 +81,14 @@ function views_index_hint_form_alter(&$form, FormStateInterface $form_state, $fo
       '#weight' => 13,
       '#dependency' => array('edit-query-options-index-hint-enabled' => '1'),
     );
+    $form['options']['query']['options']['index_hint_table'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Table'),
+      '#description' => t('Table to apply index hint to. Leave blank to use default base table.'),
+      '#default_value' => $view->getThirdPartySetting('views_index_hint', 'index_hint_table'),
+      '#weight' => 14,
+      '#dependency' => array('edit-query-options-index-hint-enabled' => '1'),
+    );
     array_unshift($form['actions']['submit']['#submit'], 'views_index_hint_display_form_submit');
   }
 }
@@ -91,4 +104,5 @@ function views_index_hint_display_form_submit($form, FormStateInterface $form_st
   $view->setThirdPartySetting('views_index_hint', 'index_hint_use', $values['query']['options']['index_hint_use']);
   $view->setThirdPartySetting('views_index_hint', 'index_hint_force', $values['query']['options']['index_hint_force']);
   $view->setThirdPartySetting('views_index_hint', 'index_hint_ignore', $values['query']['options']['index_hint_ignore']);
+  $view->setThirdPartySetting('views_index_hint', 'index_hint_table', $values['query']['options']['index_hint_table']);
 }

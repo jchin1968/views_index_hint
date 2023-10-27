@@ -84,7 +84,11 @@ class ViewsIndexHint extends SelectExtender {
       // There is no option to add the index hint except overriding
       // Execute as Drupal 7 uses SelectQuery object
       // (unlike Drupal 6 static query).
-      $search = PHP_EOL . '{'. $this->base_table .'} '. $this->base_table;
+      $tables = $this->query->getTables();
+      $table_name = $tables[$this->base_table]['table'];
+
+      $search = '{'. $table_name .'} "'. $this->base_table . '"';
+
       $index_string = '';
       foreach ($this->index_hint as $type => $hint) {
         $index_string .= $type . ' INDEX(' . Html::escape($hint) . ') ';
