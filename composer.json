@@ -1,0 +1,10 @@
+{
+  "name": "drupal/views_index_hint",
+  "description": "Provides option to add index hint to views.",
+  "type": "drupal-module",
+  "homepage": "https://drupal.org/project/views_index_hint",
+  "require": {
+    "drupal/core": "^8 || ^9 || ^10"
+  },
+}
+
